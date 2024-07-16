@@ -42,3 +42,24 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiter) {
     int result = add(input);
     ASSERT_EQ(result, expectedresult);
 }
+
+TEST(StringCalculatorHasCustomDelimiterTests, CustomDelimiterNotPresent) {
+    int expectedresult = 6;
+    const char* input = "1,2,3";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
+TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiter_EmptyString) {
+    int expectedresult = 0;
+    const char* input = "";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
+TEST(StringCalculatorAddTests, HandleNegativeNumbers) {
+    const char* input = "-1,2";
+    testing::internal::CaptureStdout();
+    int result = add(input);
+    std::string output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(result, -1);
+    ASSERT_EQ(output, "Negatives not allowed: -1 \n");
+}
